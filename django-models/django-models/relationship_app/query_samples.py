@@ -2,7 +2,7 @@ import os
 import django
 
 # Ensure Django settings are loaded
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'django_models.settings')  # Update 'django_models' with your project name
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'django_models.settings')  # ✅ Fixed project name
 django.setup()
 
 from relationship_app.models import Author, Book, Library, Librarian
@@ -11,8 +11,7 @@ def get_books_by_author(author_name):
     """Query all books written by a specific author."""
     try:
         author = Author.objects.get(name=author_name)
-        books = Book.objects.filter(author=author)
-        return books
+        return author.books.all()
     except Author.DoesNotExist:
         print(f"Author '{author_name}' does not exist.")
         return []
